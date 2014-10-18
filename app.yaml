@@ -15,14 +15,11 @@ handlers:
 # static files
 - url: /static
   static_dir: static
-  secure: always
 
 # json api
 - url: /api/.*
   script: api_handlers.app
-  secure: always
 
 # main/web interface
 - url: /.*
   script: web_handlers.app
-  secure: always
