@@ -1,28 +1,26 @@
 
-/* updates real-time */
-var source = new EventSource('');
-source.onmessage = function(event) {
-	$(document).getElementById('marquee').innerHTML = event.data;
-}
-
-/* start timer and animation */
 var timer;
+
 function init() {
-	timer = setTimeout(update, 3000);	// update every 3 seconds
+	timer = setTimeout(update, 10000);
 }
 
-/* on stop app */
-function onStop() {
-	if (timer != null) {
-		window.clearTimeout(timer);
-	}
-}
-
-/* updates */
+/* updates stock prices through get request */
 function update() {
-	$(document).get("url", function(data, status) {
-		if (status === 'success') {
-			$(document).getElementById('marquee').innerHTML = data;
+	$.get('192.1.168.108:8080/api', function(data) {
+		var response = JSON.parse(data);
+		var arr = [];
+		if (response.udpate === 'true') {
+			// update content
+			arr = response.data.split(',');
+		}
+		var list = $(document).getElementById('list');
+		var content = '';
+		for (var iter = 0; iter < arr.length; iter ++) {
+			if ((content + arr[iter]).length > 140) {
+				list.innerHTML += '<li>' + content + '</li>';
+				content = arr[iter];
+			}
 		}
 	});
 }

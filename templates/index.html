@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<style>
+		body {
+			background-color: transparent;
+		}
+		li {
+			width: 100%;
+			color: white;
+			font-family: monospace;
+			font-size: 3em;
+		}
+	</style>
 	<script src="/static/jquery-2.1.1.min.js"></script>
 	<script src="/static/jquery.vticker.min.js"></script>
 	<script>
 		$(function() {
-  $('#example').vTicker();
-});
+			  $('#example').vTicker();
+		});
 	</script>
 </head>
-<body>
+<body onload="init()">
 	<div id="example">
-		<ul>
-			<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor</li>
-			<li>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</li>
-			<li>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</li>
+		<ul id='list'>
 		</ul>
 	</div>
 </body>
