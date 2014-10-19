@@ -5,9 +5,12 @@ source.onmessage = function(event) {
 	$(document).getElementById('marquee').innerHTML = event.data;
 }
 
+var marqueeE;
+
 /* start timer and animation */
 var timer;
 function init() {
+	marqueeE = $(document).getElementById('marquee');
 	timer = setTimeout(update, 3000);	// update every 3 seconds
 }
 
@@ -22,7 +25,16 @@ function onStop() {
 function update() {
 	$(document).get("url", function(data, status) {
 		if (status === 'success') {
-			$(document).getElementById('marquee').innerHTML = data;
+			marqueeE.innerHTML = '';	// flush
+
+			// append
+
+			marqueeE.css('min-width',  + 'px');
 		}
 	});
+}
+
+/* stock price increases */
+function up(company, price) {
+	marqueeE.innerHTML += '<p class="up">' + company + ' ' + price + '</p>';
 }
