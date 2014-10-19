@@ -2,10 +2,10 @@ import pdb
 import logging
 import cgi
 import os
+import json
 
 import webapp2
 import jinja2
-import blpapi
 
 import pickle
 
@@ -30,21 +30,23 @@ class HomeHandler(webapp2.RequestHandler):
         template_values = {}
         template = JINJA_ENV.get_template('templates/index.html')
         self.response.write(template.render(template_values))
-        opts = blpapi.SessionOptions()
 
 class APIHandler(webapp2.RequestHandler):
     def get(self):
+        self.response.headers['Content-Type'] = 'application/json'
         d = {}
         for symb in SP100:
             with open(symb, 'rb') as f:
                 try:
                     d[symb] = float(pickle.load(f))
-                except:
+                except Exception as e:
                     pass
-        self.response.write(self.process(d))
+                    self.response.write(str(e) + '\n')
+        body = {'update': False, 'data': self.process(d)}
+        self.response.write(json.dumps(body))
 
     def process(self, d):
-        return ' '.join('%s: %.2f' % (symb, float(d.get(symb, 0))) for symb in sorted(d))
+        return ', '.join('%s: %.2f' % (symb, float(d.get(symb, 0))) for symb in sorted(d))
 
     def format(self, s):
         try:
