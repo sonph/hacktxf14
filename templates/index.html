@@ -1,60 +1,29 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Title of the document</title>
-		<style>
-			.demo {
-				width: 400px;
-				float: right;
-			}
-			.demo > h3 {
-				color:#fff;	
-			}
-			.fade,.slide {
-			    background: none repeat scroll 0 0 #3B8ED3;
-			    color: #FFFFFF;
-			    font-size: 13px;
-			    padding: 10px;
-			}
-			.fade > li,.slide > li,.typing > li {
-			    list-style: none inside none;
-			}
-			.demo > h3 {
-			    color: #23669E;
-			    font-size: 15px;
-				padding-left:1px;
-			}
-
-		</style>
-	</head>
-
-<body>
-	<aside class='demo'>
-	<ul class='slide'>
-		<li>Hello</li>
-        <li>I am mahdi khaksar from iran</li>
-        <li>I am designer and programmer at progpars.com </li>
-        <li>www.ijquery.ir</li>	
-	</ul>
-	</aside>
-
-	<script type="text/javascript" src='../static/inewsticker.js'></script>
-	<script type="text/javascript" src='../static/jquery.js'></script>
+<head>
+	<style>
+		body {
+			background-color: transparent;
+		}
+		li {
+			width: 100%;
+			color: white;
+			font-family: monospace;
+			font-size: 3em;
+		}
+	</style>
+	<script src="/static/jquery-2.1.1.min.js"></script>
+	<script src="/static/jquery.vticker.min.js"></script>
 	<script>
-		window.onload = (function() {
-		    $('.slide').inewsticker({
-				speed       : 2500,
-				effect      : 'slide',
-				dir         : 'ltr',
-				font_size   : 13,
-				color       : '#fff',
-				font_family : 'arial',
-				delay_after : 1000						
-			});
+		$(function() {
+			  $('#example').vTicker();
 		});
 	</script>
-
+</head>
+<body onload="init()">
+	<div id="example">
+		<ul id='list'>
+		</ul>
+	</div>
 </body>
-
 </html>
