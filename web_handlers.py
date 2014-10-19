@@ -7,6 +7,18 @@ import webapp2
 import jinja2
 import blpapi
 
+import pickle
+
+SP100 = ['AAPL', 'ABBV', 'ABT', 'ACN', 'AIG', 'ALL', 'AMGN', 'AMZN', 'APA',
+'APC', 'AXP', 'BA', 'BAC', 'BAX', 'BIIB', 'BK', 'BMY', 'BRK.B', 'C', 'CAT',
+'CL', 'CMCSA', 'COF', 'COP', 'COST', 'CSCO', 'CVS', 'CVX', 'DD', 'DIS', 'DOW',
+'DVN', 'EBAY', 'EMC', 'EMR', 'EXC', 'F', 'FB', 'FCX', 'FDX', 'FOXA', 'GD', 'GE',
+'GILD', 'GM', 'GOOG', 'GS', 'HAL', 'HD', 'HON', 'HPQ', 'IBM', 'INTC', 'JNJ',
+'JPM', 'KO', 'LLY', 'LMT', 'LOW', 'MA', 'MCD', 'MDLZ', 'MDT', 'MET', 'MMM',
+'MO', 'MON', 'MRK', 'MS', 'MSFT', 'NKE', 'NOV', 'NSC', 'ORCL', 'OXY', 'PEP',
+'PFE', 'PG', 'PM', 'QCOM', 'RTN', 'SBUX', 'SLB', 'SO', 'SPG', 'T', 'TGT', 'TWX',
+'TXN', 'UNH', 'UNP', 'UPS', 'USB', 'UTX', 'V', 'VZ', 'WAG', 'WFC', 'WMT', 'XOM']
+
 JINJA_ENV = jinja2.Environment(
     loader = jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions = ['jinja2.ext.autoescape'],
@@ -20,8 +32,29 @@ class HomeHandler(webapp2.RequestHandler):
         self.response.write(template.render(template_values))
         opts = blpapi.SessionOptions()
 
+class APIHandler(webapp2.RequestHandler):
+    def get(self):
+        d = {}
+        for symb in SP100:
+            with open(symb, 'rb') as f:
+                try:
+                    d[symb] = float(pickle.load(f))
+                except:
+                    pass
+        self.response.write(self.process(d))
+
+    def process(self, d):
+        return ' '.join('%s: %.2f' % (symb, float(d.get(symb, 0))) for symb in sorted(d))
+
+    def format(self, s):
+        try:
+            return '%.2f' % float(s)
+        except:
+            return 'Unv'
+
 app = webapp2.WSGIApplication([
     ('/', HomeHandler),
+    ('/api', APIHandler)
 ], debug=True)
 
 def main():
