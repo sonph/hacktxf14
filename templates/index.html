@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Title of the document</title>
-		<link rel="stylesheet" href="/static/style.css">
-		<script src='/static/jQuery.js'></script>
-		<script src='/static/script.js'></script>
-	</head>
-
+<head>
+	<script src="/static/jquery-2.1.1.min.js"></script>
+	<script src="/static/jquery.vticker.min.js"></script>
+	<script>
+		$(function() {
+  $('#example').vTicker();
+});
+	</script>
+</head>
 <body>
-
-	<div id='marquee_host'>
-		<marquee id='marquee' behavior='scroll' direction='left'>abc</marquee>
+	<div id="example">
+		<ul>
+			<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor</li>
+			<li>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</li>
+			<li>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</li>
+		</ul>
 	</div>
-
-	<div style='background-color: blue; width: 100%; height: 100%'>
-		<p style='font-size: 2em; color: white;'>white static abc</p>
-	</div>
-
 </body>
-
 </html>
